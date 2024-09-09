@@ -1,4 +1,6 @@
-# WIGO Project - README
+<p align="center">
+   <img src="./assets/wigo.png" height="80px">
+</p>
 
 ## Overview
 WIGO is a comprehensive tourism and attraction platform aimed at providing an all-in-one solution for users to manage their travel journeys. It covers needs such as ticketing, media promotion, government promotion, and also supports POS systems for tourism businesses. The system is designed with a service-oriented architecture that includes:
@@ -7,35 +9,47 @@ WIGO is a comprehensive tourism and attraction platform aimed at providing an al
 - **Client Mobile App**: Developed with **Flutter**
 - **LLM-based Recommendation System**: Implemented in **Python**
 
-This README provides an overview of the project structure, installation steps, and how to contribute to the development.
-
 ---
 
 ## Table of Contents
 
-1. [Architecture Overview](#architecture-overview)
-2. [Technologies Used](#technologies-used)
-3. [Installation Instructions](#installation-instructions)
-    - Backend API
-    - Mobile App
-    - LLM System
-4. [Project Structure](#project-structure)
-5. [API Documentation](#api-documentation)
-6. [Development Guidelines](#development-guidelines)
-7. [Contributing](#contributing)
-8. [License](#license)
+- [Overview](#overview)
+- [Table of Contents](#table-of-contents)
+- [Architecture Overview](#architecture-overview)
+  - [1. Backend API (Node Js)](#1-backend-api-node-js)
+  - [2. Mobile App (Flutter)](#2-mobile-app-flutter)
+  - [3. LLM Recommendation System (Python)](#3-llm-recommendation-system-python)
+- [Technologies Used](#technologies-used)
+- [License](#license)
 
 ---
 
 ## Architecture Overview
 
+<img src="./assets/wigo-infra.png" height="600px">
+
+
 The WIGO platform consists of three main components:
 
-- **Backend API (NestJS)**: Handles the core logic, routes, authentication, database management, and integrations with third-party services like payment gateways.
+### 1. Backend API (Node Js)
+Handles the core logic, routes, authentication, database management, and integrations with third-party services like payment gateways.
   
-- **Mobile App (Flutter)**: The client-side interface used by tourists and tourism businesses to interact with the WIGO platform. It provides users with easy access to booking services, POS systems, and recommendations.
+### 2. Mobile App (Flutter)
+The client-side interface used by tourists and tourism businesses to interact with the WIGO platform. It provides users with easy access to booking services, POS systems, and recommendations.
 
-- **LLM Recommendation System (Python)**: Processes big data of tourism and attraction places to provide AI-powered suggestions using the **Llama 3 model** for personalized user experiences. It interfaces with the backend to deliver intelligent recommendations based on user queries.
+### 3. LLM Recommendation System (Python)
+
+<img src="./assets/wigo-rag.png" height="300px">
+
+1. **Data Preparation**: The process starts with cleaning tourism data from MySQL using Pandas. Then, this cleaned data is turned into embeddings (numerical data) that can be searched quickly.
+
+2. **Database**: The embeddings are stored in a MongoDB vector database, which helps in finding relevant information when users ask questions.
+
+3. **LLM Service**: The user asks a question, which is turned into an embedding (query input). This embedding is used to search the database for relevant data. The data is then processed using the *Llama3* AI model from Meta to generate a response.
+
+4. **Response**: The final response is generated based on relevant data and *Llama3*'s AI processing, and is then shown to the user as a result.
+
+Processes big data of tourism and attraction places to provide AI-powered suggestions using the **Llama 3 model** for personalized user experiences. It interfaces with the backend to deliver intelligent recommendations based on user queries.
 
 ---
 
@@ -48,167 +62,6 @@ The WIGO platform consists of three main components:
 - **Database**: PostgreSQL
 - **Authentication**: JWT, OAuth2
 - **DevOps**: Docker, Kubernetes
-
----
-
-## Installation Instructions
-
-### 1. Backend API (NestJS)
-
-**Prerequisites**:
-- Node.js (v14+)
-- PostgreSQL database
-- Docker (optional for containerization)
-
-**Steps**:
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/wigo-backend.git
-   cd wigo-backend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Configure environment variables:
-   Copy `.env.example` to `.env` and update the values accordingly.
-   ```bash
-   cp .env.example .env
-   ```
-
-4. Start the development server:
-   ```bash
-   npm run start:dev
-   ```
-
-### 2. Mobile App (Flutter)
-
-**Prerequisites**:
-- Flutter SDK
-- Android Studio / Xcode for mobile emulator
-
-**Steps**:
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/wigo-mobile.git
-   cd wigo-mobile
-   ```
-
-2. Install dependencies:
-   ```bash
-   flutter pub get
-   ```
-
-3. Configure environment variables in `lib/config/env.dart`.
-
-4. Run the mobile app:
-   ```bash
-   flutter run
-   ```
-
-### 3. LLM Recommendation System (Python)
-
-**Prerequisites**:
-- Python 3.8+
-- Virtualenv
-
-**Steps**:
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/wigo-llm.git
-   cd wigo-llm
-   ```
-
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate   # on Windows: venv\Scripts\activate
-   ```
-
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Run the LLM app:
-   ```bash
-   python app.py
-   ```
-
----
-
-## Project Structure
-
-### Backend (NestJS)
-```
-wigo-backend/
-│
-├── src/
-│   ├── auth/              # Authentication module
-│   ├── booking/           # Booking management
-│   ├── users/             # User management
-│   └── ...                # Other features
-├── test/                  # Unit tests
-├── .env.example           # Environment configuration example
-├── package.json           # NPM dependencies
-└── README.md              # Project documentation
-```
-
-### Mobile App (Flutter)
-```
-wigo-mobile/
-│
-├── lib/
-│   ├── models/            # Data models
-│   ├── services/          # API and service calls
-│   ├── views/             # UI components
-│   └── ...                # Other features
-├── pubspec.yaml           # Flutter dependencies
-└── README.md              # Project documentation
-```
-
-### LLM App (Python)
-```
-wigo-llm/
-│
-├── app.py                 # Main application entry point
-├── models/                # Model and data processing files
-├── config/                # Configuration files
-├── data/                  # Cleaned and processed data
-├── requirements.txt       # Python dependencies
-└── README.md              # Project documentation
-```
-
----
-
-## API Documentation
-
-For detailed API routes and usage, refer to the **Swagger documentation** generated by NestJS:
-```
-http://localhost:3000/api/docs
-```
-
----
-
-## Development Guidelines
-
-- **Code Style**: Follow the linting rules specified in each repository (`eslint` for Node.js, `pylint` for Python).
-- **Branching**: Follow Git flow for feature development. Always work on a feature branch and submit pull requests for review.
-- **Testing**: Ensure that unit tests are written for every new feature or bug fix.
-- **CI/CD**: GitHub Actions are set up for automated testing and deployments.
-
----
-
-## Contributing
-
-We welcome contributions! Please follow the steps below to contribute to this project:
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes (`git commit -m 'Add your feature'`)
-4. Push to the branch (`git push origin feature/your-feature`)
-5. Open a pull request
 
 ---
 
